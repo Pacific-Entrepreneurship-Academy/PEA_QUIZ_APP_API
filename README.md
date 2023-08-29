@@ -2,7 +2,6 @@
 
 Documentation coming soon ....
 
-# Docs
 
 -   Documentation for API Endpoints
     -------------------------------
