@@ -4,121 +4,341 @@ Documentation coming soon ....
 
 # Docs
 
-## Admins
+-   Documentation for API Endpoints
+    -------------------------------
 
-<hr>
+    ### Admins
 
-### Get all Admin
-    Endpoint: GET /admins
-    Description: Retrieve all admin users.
-    Required Parameters:
-    - None
+    #### POST /admins
 
-### Create Admin
-    Endpoint: POST /admins
-    Description: Creates a new admin user.
-    Required Parameters:
-    - username (string): The username of the admin.
-    - email (string): The email address of the admin.
-    - password (string): The password for the admin account.
-#### Example request:
-```
-{
-  "username": "admin123",
-  "email": "admin@example.com",
-  "password": "secretpassword"
-}
+    -   Create a new admin user.
+    -   **Request Method:** POST
+    -   **Request Body:** JSON
+        -   `username` (string): Admin's username
+        -   `email` (string): Admin's email
+        -   `password` (string): Admin's password
+    -   **Response:**
+        -   `data` (list of admin objects): Created admin users
+        -   `status` (string): "created"
+    -   Example Request:
 
-```
-### Get Single Admin
-    Endpoint: GET /get-admin/query
-    Description: Get Admin either by username or email.
-    Required Parameters:
-        Either:
-           - username (string): The username of the admin.
-                            or            
-           - email (string): The email address of the admin.
-#### Example Request:
-```
-    {
-      "username": "admin123",
-      "password": "secretpassword"
-    }
-```
-    
-## Students
-Create Student
+        json
 
-    Endpoint: POST /students
-    Description: Creates a new student user.
-    Required Parameters:
-        firstname (string): The first name of the student.
-        lastname (string): The last name of the student.
-        email (string): The email address of the student.
-        password (string): The password for the student account.
-        year (string): The academic year of the student.
-    Example Request:
+    -   `{
+          "username": "admin1",
+          "email": "admin1@example.com",
+          "password": "securepassword"
+        }`
 
-    json
+    #### GET /admins
 
-    {
-      "firstname": "John",
-      "lastname": "Doe",
-      "email": "john@example.com",
-      "password": "studentpassword",
-      "year": "2023"
-    }
+    -   Retrieve a list of all admin users.
+    -   **Request Method:** GET
+    -   **Response:**
+        -   `data` (list of admin objects): List of admin users
+    -   Example Response:
 
-    Response:
-        Status: 201 Created
-        Data: A list of all student users including the newly created one.
+        json
 
-Student Login
+    -   `{
+          "data": [
+            {
+              "username": "admin1",
+              "email": "admin1@example.com"
+            },
+            {
+              "username": "admin2",
+              "email": "admin2@example.com"
+            }
+          ]
+        }`
 
-    Endpoint: POST /student/login
-    Description: Handles student user login.
-    Required Parameters:
-        email (string): The email address of the student.
-        password (string): The password for the student account.
-    Example Request:
+    #### GET /get-admin/query
 
-    json
+    -   Retrieve admin information based on query parameters.
+    -   **Request Method:** GET
+    -   **Query Parameters:**
+        -   `username` (string, optional): Admin's username
+        -   `email` (string, optional): Admin's email
+        -   `id` (string, optional): Admin's ID
+    -   **Response:**
+        -   `data` (admin object): Admin information
+    -   Example Request:
+        -   `/get-admin/query?username=admin1`
+        -   `/get-admin/query?email=admin1@example.com`
+        -   `/get-admin/query?id=12345`
+    -   Example Response:
 
-    {
-      "email": "john@example.com",
-      "password": "studentpassword"
-    }
+        json
 
-    Response:
-        Status: 200 OK
-        Data: Message indicating successful login.
+    -   `{
+          "message": "success",
+          "data": {
+            "username": "admin1",
+            "email": "admin1@example.com"
+          }
+        }`
 
-Questions
-Create Question
+    #### POST /admin/login
 
-    Endpoint: POST /questions
-    Description: Creates a new question.
-    Required Parameters:
-        username (string): The username of the admin creating the question.
-        subject (string): The subject of the question.
-        year (string): The academic year associated with the question.
-        options (array or object): The answer options for the question.
-        answer (string): The correct answer for the question.
-        question (string): The question text.
-    Example Request:
+    -   Log in an admin user.
+    -   **Request Method:** POST
+    -   **Request Body:** JSON
+        -   `username` (string): Admin's username
+        -   `email` (string, optional): Admin's email
+        -   `password` (string): Admin's password
+    -   **Response:**
+        -   `message` (string): "Logged in"
+        -   `status` (string): "success"
+    -   Example Request:
 
-    json
+        json
 
-{
-  "username": "admin123",
-  "subject": "Math",
-  "year": "2023",
-  "options": ["A", "B", "C", "D"],
-  "answer": "B",
-  "question": "What is 2 + 2?"
-}
+    -   `{
+          "username": "admin1",
+          "password": "securepassword"
+        }`
 
-Response:
+    ### Students
 
-    Status: 201 Created
-    Data: A list of all questions including the newly created one.
+    #### POST /students
+
+    -   Create a new student.
+    -   **Request Method:** POST
+    -   **Request Body:** JSON
+        -   `firstname` (string): Student's first name
+        -   `lastname` (string): Student's last name
+        -   `email` (string): Student's email
+        -   `password` (string): Student's password
+        -   `year` (string): Student's year
+    -   **Response:**
+        -   `data` (list of student objects): Created student users
+        -   `status` (string): "created"
+    -   Example Request:
+
+        json
+
+    -   `{
+          "firstname": "John",
+          "lastname": "Doe",
+          "email": "john@example.com",
+          "password": "securepassword",
+          "year": "three"
+        }`
+
+    #### GET /students
+
+    -   Retrieve a list of all student users.
+    -   **Request Method:** GET
+    -   **Response:**
+        -   `data` (list of student objects): List of student users
+    -   Example Response:
+
+        json
+
+    -   `{
+          "data": [
+            {
+              "firstname": "John",
+              "lastname": "Doe",
+              "email": "john@example.com",
+              "year": "one"
+            },
+            {
+              "firstname": "Jane",
+              "lastname": "Smith",
+              "email": "jane@example.com",
+              "year": "two"
+            }
+          ]
+        }`
+
+    #### GET /get-student/query
+
+    -   Retrieve student information based on query parameters.
+    -   **Request Method:** GET
+    -   **Query Parameters:**
+        -   `firstname` (string, optional): Student's first name
+        -   `lastname` (string, optional): Student's last name
+        -   `email` (string, optional): Student's email
+        -   `id` (string, optional): Student's ID
+    -   **Response:**
+        -   `data` (student object): Student information
+    -   Example Request:
+        -   `/get-student/query?firstname=John`
+        -   `/get-student/query?email=john@example.com`
+        -   `/get-student/query?id=12345`
+    -   Example Response:
+
+        json
+
+    -   `{
+          "message": "success",
+          "data": {
+            "firstname": "John",
+            "lastname": "Doe",
+            "email": "john@example.com",
+            "year": "eleven"
+          }
+        }`
+
+    #### POST /student/login
+
+    -   Log in a student user.
+    -   **Request Method:** POST
+    -   **Request Body:** JSON
+        -   `email` (string): Student's email
+        -   `password` (string): Student's password
+    -   **Response:**
+        -   `message` (string): "Logged in"
+        -   `status` (string): "success"
+    -   Example Request:
+
+        json
+
+    -   `{
+          "email": "john@example.com",
+          "password": "securepassword"
+        }`
+
+    ### Questions
+
+    #### POST /questions
+
+    -   Create a new question.
+    -   **Request Method:** POST
+    -   **Request Body:** JSON
+        -   `username` (string): Admin's username
+        -   `subject` (string): Question subject
+        -   `year` (string): Question year
+        -   `options` (list or dictionary): Question options
+        -   `answer` (string): Question answer
+        -   `question` (string): The question itself
+    -   **Response:**
+        -   `data` (list of question objects): Created questions
+        -   `status` (string): "created"
+    -   Example Request:
+
+        json
+
+    -   `{
+          "username": "admin1",
+          "subject": "math",
+          "year": "seven",
+          "options": ["A", "B", "C", "D"],
+          "answer": "A",
+          "question": "What is 2 + 2?"
+        }`
+
+    #### GET /questions
+
+    -   Retrieve a list of all questions.
+    -   **Request Method:** GET
+    -   **Response:**
+        -   `data` (list of question objects): List of questions
+    -   Example Response:
+
+        json
+
+    -   `{
+          "data": [
+            {
+              "subject": "math",
+              "year": "ten",
+              "options": ["A", "B", "C", "D"],
+              "answer": "A",
+              "question": "What is 2 + 2?"
+            },
+            {
+              "subject": "science",
+              "year": "twelve",
+              "options": ["A", "B", "C", "D"],
+              "answer": "C",
+              "question": "What is the capital of France?"
+            }
+          ]
+        }`
+
+    #### GET /questions/query
+
+    -   Retrieve question information based on query parameters.
+    -   **Request Method:** GET
+    -   **Query Parameters:**
+        -   `id` (string, required): Question's ID
+    -   **Response:**
+        -   `data` (question object): Question information
+    -   Example Request:
+        -   `/questions/query?id=12345`
+    -   Example Response:
+
+        json
+
+    -   `{
+          "message": "success",
+          "data": {
+            "subject": "math",
+            "year": "ten",
+            "options": ["A", "B", "C", "D"],
+            "answer": "A",
+            "question": "What is 2 + 2?"
+          }
+        }`
+
+    #### PUT /questions/query
+
+    -   Update question information based on query parameters.
+    -   **Request Method:** PUT
+    -   **Query Parameters:**
+        -   `id` (string, required): Question's ID
+    -   **Request Body:** JSON
+        -   `subject` (string, optional): Updated question subject
+        -   `year` (string, optional): Updated question year
+        -   `options` (list or dictionary, optional): Updated question options
+        -   `answer` (string, optional): Updated question answer
+        -   `question` (string, optional): Updated question itself
+    -   **Response:**
+        -   `data` (question object): Updated question information
+        -   `message` (string): "Successfully updated question"
+    -   Example Request:
+        -   `/questions/query?id=12345`
+
+        json
+
+    -   `{
+          "subject": "math",
+          "options": ["A", "B", "C"],
+          "answer": "B"
+        }`
+
+        -   Example Response:
+
+        json
+
+    -   `{
+          "data": {
+            "subject": "math",
+            "year": "five",
+            "options": ["A", "B", "C"],
+            "answer": "B",
+            "question": "What is 2 + 2?"
+          },
+          "message": "Successfully updated question"
+        }`
+
+    #### DELETE /questions/query
+
+    -   Delete a question based on query parameters.
+    -   **Request Method:** DELETE
+    -   **Query Parameters:**
+        -   `id` (string, required): Question's ID
+    -   **Response:**
+        -   `message` (string): "Successfully deleted Question"
+    -   Example Request:
+        -   `/questions/query?id=12345`
+    -   Example Response:
+
+        json
+
+    `{
+      "message": "Successfully deleted Question"
+    }`
