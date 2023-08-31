@@ -30,6 +30,11 @@ class Questions(BaseModel):
     admin_id = db.Column(db.String(126), db.ForeignKey('admin.id'))
     subject_name = db.Column(db.String(255), db.ForeignKey('subject.name'))
     year_ = db.Column(db.String(255), db.ForeignKey('year.name'))
+    quiz_id = db.Column(db.String, db.ForeignKey('quiz.id'), nullable=False)
+    quiz = db.relationship('Quiz', backref='questions')
+
+
+
 
     def answer_in_option(self):
         if type(self.options) is dict:
