@@ -19,7 +19,7 @@ class Subject(BaseModel):
     name = db.Column(db.String(255), nullable=False, unique=True)
     questions = db.relationship('Questions', backref='subject', lazy='dynamic')
     students = db.relationship(
-        'Student', overlaps="student,subjects",secondary=student_subject, backref='subject',lazy='dynamic')
+        'Student', overlaps="student,subject",secondary=student_subject, backref='subject',lazy='dynamic')
 
     def __repr__(self):
         return f'<Subject {self.id}\nName: {self.name}>'

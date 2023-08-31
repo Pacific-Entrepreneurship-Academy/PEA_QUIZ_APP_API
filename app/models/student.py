@@ -12,6 +12,13 @@ student_subject = db.Table(
     db.Column('subject_name', db.String(255), db.ForeignKey('subject.name'))
 )
 
+# student_score = db.Table(
+#     'student_score',
+#     db.Column('student_name', db.String(255), db.ForeignKey('student.email')),
+#     db.Column('score', db.Integer, db.ForeignKey('score.value')),
+#     db.Column('quiz', db.Integer, db.ForeignKey('quiz.name'))
+# )
+
 
 class Student(BaseModel):
     """
@@ -33,7 +40,11 @@ class Student(BaseModel):
     password_hash = db.Column(db.String(255), nullable=False)
     year_ = db.Column(db.String(255), db.ForeignKey('year.name'))
     subjects = db.relationship(
-        'Subject', secondary=student_subject, backref='student',lazy='dynamic')
+        'Subject', overlaps="student,subject",secondary=student_subject, backref='student',lazy='dynamic')
+    # quizzes = db.relationship(
+        # 'Quiz', overlaps="score,student",secondary=student_score, backref='quiz',lazy='dynamic')
+    quiz_records = db.relationship('QuizRecord',backref='student')
+
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
