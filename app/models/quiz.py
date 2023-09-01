@@ -12,8 +12,8 @@ class Quiz(BaseModel):
     Usage:
         We only have to do : `Quiz(name=<'name of subject'>)`
     """
-    name = db.Column(db.Integer, autoincrement=True, unique=True)
+    count = db.Column(db.Integer,nullable=False)
     questions = db.relationship('Questions', backref='quiz')
     quiz_records = db.relationship('QuizRecord',backref='quiz')
     def __repr__(self):
-        return f'{self.name}:\n{list(self.questions)}'
+        return f'{self.id}:\n{list(self.questions)}'

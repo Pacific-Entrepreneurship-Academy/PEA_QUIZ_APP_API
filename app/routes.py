@@ -233,3 +233,6 @@ def question():
         return jsonify({"error": "No question found with that id", "method": "get"}), 404
     return jsonify({'message': 'success', 'data': data.to_dict()}), 200
 
+@api.route('/quiz',methods=['GET','POST'])
+def quiz():
+    pass
