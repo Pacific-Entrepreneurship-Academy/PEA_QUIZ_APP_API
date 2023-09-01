@@ -1,6 +1,5 @@
 from app.models.base_model import BaseModel
 from app import db
-from app.models.student import student_score
 """
 Subject class for the Quiz App
 """
@@ -14,7 +13,7 @@ class Quiz(BaseModel):
         We only have to do : `Quiz(name=<'name of subject'>)`
     """
     name = db.Column(db.Integer, autoincrement=True, unique=True)
-    questions = db.relationship('Question', backref='quiz')
-    
+    questions = db.relationship('Questions', backref='quiz')
+    quiz_records = db.relationship('QuizRecord',backref='quiz')
     def __repr__(self):
         return f'{self.name}:\n{list(self.questions)}'
