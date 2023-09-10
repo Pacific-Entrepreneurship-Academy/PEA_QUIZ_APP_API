@@ -1,5 +1,4 @@
-__pycache__/
 .vscode/
 *.swp
-app/__pycache__/
-ss.py
+*__pycache__/
+

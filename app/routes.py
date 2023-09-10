@@ -6,6 +6,9 @@ import warnings
 from sqlalchemy.exc import SAWarning
 
 warnings.filterwarnings("ignore", category=SAWarning)
+def quiz_count():
+    return Quiz.query.count() + 1
+
 
 # Admins
 @api.route('/admins', methods=['POST', 'GET'])
@@ -233,6 +236,24 @@ def question():
         return jsonify({"error": "No question found with that id", "method": "get"}), 404
     return jsonify({'message': 'success', 'data': data.to_dict()}), 200
 
-@api.route('/quiz',methods=['GET','POST'])
-def quiz():
-    pass
+# @api.route('/quiz',methods=['GET','POST'])
+# def quiz():
+#     if request.method == 'POST':
+#         data = request.json
+#         try:
+#             username = data['username']
+#             email = data['email']
+#             password = data['password']
+#             condition = and_(Admin.username == username, Admin.email == email)
+#             if Admin.query.filter(condition).first():
+#                 print(condition)
+#                 return jsonify({"error": "an admin found with given data"}), 406
+#             admin = Admin(username=username, email=email)
+#             admin.set_password(password)
+#             admin.save()
+#             admins = [x.to_dict() for x in Admin.all()]
+#             return jsonify({'data': admins, 'status': 'created'}), 201
+#         except KeyError:
+#             return jsonify({'error': 'Missing required data', 'status': 'Failed'}), 400
+#     quiz = [x.to_dict() for x in Quiz.all()]
+#     return jsonify(quiz), 200
